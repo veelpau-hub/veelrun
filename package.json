@@ -1,0 +1,16 @@
+{
+  "name": "homerun",
+  "version": "1.0.0",
+  "description": "GPS running tracker — distancia a casa en tiempo real",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "node generate-icons.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

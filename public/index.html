@@ -4,227 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>HomeRun</title>
-
-  <!-- PWA -->
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#0a0a0a">
-
-  <!-- iOS PWA -->
+  <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="HomeRun">
   <link rel="apple-touch-icon" href="/icon-192.png">
-
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --bg2: #141414;
-      --bg3: #1e1e1e;
-      --text: #f0f0f0;
-      --muted: #888;
-      --subtle: #555;
-      --accent: #c8f135;
-      --accent-dim: rgba(200,241,53,0.12);
-      --red: #ff5a5a;
-      --red-dim: rgba(255,90,90,0.12);
-      --green: #4ade80;
-      --green-dim: rgba(74,222,128,0.12);
-      --border: rgba(255,255,255,0.07);
-      --radius: 14px;
-      --radius-sm: 9px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
-      min-height: 100dvh;
-      padding: env(safe-area-inset-top, 16px) 16px env(safe-area-inset-bottom, 16px);
-      display: flex;
-      flex-direction: column;
-      max-width: 430px;
-      margin: 0 auto;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0 20px;
-    }
-
-    .logo {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
-    .logo span { color: var(--accent); }
-
-    .gps-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--muted);
-      background: var(--bg3);
-      padding: 5px 10px;
-      border-radius: 99px;
-    }
-    .gps-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--subtle);
-      transition: background 0.3s;
-    }
-    .gps-dot.on { background: var(--green); box-shadow: 0 0 6px var(--green); }
-
-    /* Main distance card */
-    .home-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px 20px 20px;
-      text-align: center;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .home-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0.4;
-    }
-    .home-card-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .home-card-value {
-      font-size: 72px;
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: -3px;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-    }
-    .home-card-value.far { color: var(--accent); }
-    .home-card-unit {
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0;
-    }
-    .home-card-sub {
-      font-size: 11px;
-      color: var(--subtle);
-      margin-top: 10px;
-    }
-    .home-card-sub.set { color: var(--green); }
-
-    /* Stats grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .stat {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-    }
-    .stat-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .stat-value {
-      font-size: 26px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-    }
-    .stat-unit {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 400;
-    }
-
-    /* Buttons */
-    .btn-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .btn {
-      padding: 16px 8px;
-      border-radius: var(--radius-sm);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-      color: var(--text);
-      transition: opacity 0.15s, transform 0.1s;
-      width: 100%;
-      font-family: inherit;
-    }
-    .btn:active { transform: scale(0.97); opacity: 0.8; }
-    .btn-start {
-      background: var(--accent);
-      color: #0a0a0a;
-      border-color: transparent;
-    }
-    .btn-stop {
-      background: var(--red-dim);
-      color: var(--red);
-      border-color: rgba(255,90,90,0.25);
-    }
-    .btn-home-set { background: var(--green-dim); color: var(--green); border-color: rgba(74,222,128,0.2); }
-    .btn-reset {
-      width: 100%;
-      padding: 12px;
-      font-size: 13px;
-      color: var(--subtle);
-      border-color: transparent;
-      background: transparent;
-    }
-
-    .alert {
-      font-size: 13px;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-    .alert-warn { background: rgba(255,180,0,0.12); color: #ffb400; }
-    .alert-ok { background: var(--green-dim); color: var(--green); }
-    .alert-info { background: rgba(100,160,255,0.12); color: #64a0ff; }
-
-    footer {
-      margin-top: auto;
-      padding-top: 16px;
-      text-align: center;
-      font-size: 11px;
-      color: var(--subtle);
-    }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    :root{--acc:#c8f135;--bg:#000;--card:#111;--txt:#fff;--muted:#666;--subtle:#2a2a2a}
+    body{background:var(--bg);color:var(--txt);font-family:-apple-system,'SF Pro Display',system-ui,sans-serif;min-height:100dvh;padding:env(safe-area-inset-top,16px) 20px calc(env(safe-area-inset-bottom,0px)+20px);display:flex;flex-direction:column;max-width:430px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 8px}
+    .logo{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+    .logo span{color:var(--acc)}
+    .gps-pill{display:flex;align-items:center;gap:6px;background:#1a1a1a;border:1px solid #252525;border-radius:99px;padding:5px 12px;font-size:12px;color:#888}
+    .gps-dot{width:7px;height:7px;border-radius:50%;background:#333;transition:background .3s}
+    .gps-dot.on{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+    .alert{font-size:13px;padding:9px 14px;border-radius:10px;margin-bottom:10px;line-height:1.5}
+    .alert-warn{background:rgba(255,180,0,.1);color:#ffb400}
+    .alert-ok{background:rgba(200,241,53,.1);color:var(--acc)}
+    .alert-info{background:rgba(100,160,255,.1);color:#64a0ff}
+    .compass-wrap{width:100%;max-width:340px;margin:0 auto 14px;aspect-ratio:1}
+    #csvg{width:100%;height:100%}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+    .stat{background:var(--card);border-radius:14px;padding:14px 16px}
+    .stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
+    .stat-value{font-size:28px;font-weight:700;letter-spacing:-1px;line-height:1;color:var(--txt)}
+    .stat-unit{font-size:14px;font-weight:400;color:var(--muted)}
+    .btn-main{width:100%;padding:18px;background:var(--acc);color:#000;border:none;border-radius:99px;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .15s,transform .1s}
+    .btn-main:active{transform:scale(.97);opacity:.85}
+    .btn-main.stop{background:#1a0000;color:#ff5a5a;border:1px solid rgba(255,90,90,.25)}
+    .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .btn-sec{padding:14px;background:var(--card);border:none;border-radius:99px;font-size:14px;font-weight:600;color:var(--txt);cursor:pointer;font-family:inherit;transition:opacity .15s}
+    .btn-sec:active{opacity:.6}
   </style>
 </head>
 <body>
@@ -239,153 +51,204 @@
 
 <div id="alert-box"></div>
 
-<div class="home-card">
-  <div class="home-card-label">distancia a casa</div>
-  <div class="home-card-value" id="home-dist">—<span class="home-card-unit"></span></div>
-  <div class="home-card-sub" id="home-sub">Marca tu casa antes de salir</div>
+<div class="compass-wrap">
+<svg id="csvg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0d1800"/>
+      <stop offset="100%" stop-color="#040800"/>
+    </radialGradient>
+    <clipPath id="cc"><circle cx="150" cy="150" r="138"/></clipPath>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feComposite in="SourceGraphic" in2="b" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="150" cy="150" r="141" fill="#0a0f00"/>
+  <circle cx="150" cy="150" r="139" fill="url(#bg)"/>
+
+  <!-- Outer rings -->
+  <circle cx="150" cy="150" r="140" fill="none" stroke="#c8f135" stroke-width="1" opacity=".25"/>
+  <circle cx="150" cy="150" r="137" fill="none" stroke="#c8f135" stroke-width=".5" opacity=".1"/>
+
+  <!-- Inner rings (radar grid) -->
+  <circle cx="150" cy="150" r="105" fill="none" stroke="#1e2e00" stroke-width=".8"/>
+  <circle cx="150" cy="150" r="70" fill="none" stroke="#1e2e00" stroke-width=".8"/>
+  <circle cx="150" cy="150" r="35" fill="none" stroke="#1e2e00" stroke-width=".8"/>
+
+  <!-- Cross lines -->
+  <line x1="150" y1="12" x2="150" y2="288" stroke="#1e2e00" stroke-width=".5"/>
+  <line x1="12" y1="150" x2="288" y2="150" stroke="#1e2e00" stroke-width=".5"/>
+
+  <!-- Tick marks -->
+  <g id="ticks"/>
+
+  <!-- Cardinal labels -->
+  <text x="150" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#c8f135" font-family="-apple-system,system-ui,sans-serif" opacity=".95">N</text>
+  <text x="150" y="285" text-anchor="middle" font-size="10" fill="#3a4a20" font-family="-apple-system,system-ui,sans-serif">S</text>
+  <text x="280" y="155" text-anchor="middle" font-size="10" fill="#3a4a20" font-family="-apple-system,system-ui,sans-serif">E</text>
+  <text x="20" y="155" text-anchor="middle" font-size="10" fill="#3a4a20" font-family="-apple-system,system-ui,sans-serif">O</text>
+
+  <!-- N arc highlight -->
+  <path id="n-arc" fill="none" stroke="#c8f135" stroke-width="3" stroke-linecap="round" opacity=".7" filter="url(#glow)"/>
+
+  <!-- Sine wave horizon -->
+  <g clip-path="url(#cc)" opacity=".2">
+    <path id="wave" fill="none" stroke="#c8f135" stroke-width="1.2"/>
+  </g>
+
+  <!-- Distance value -->
+  <text id="dval" x="150" y="148" text-anchor="middle" font-size="56" font-weight="700" fill="white" font-family="-apple-system,system-ui,sans-serif" letter-spacing="-2">—</text>
+  <text id="dunit" x="150" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#c8f135" font-family="-apple-system,system-ui,sans-serif" letter-spacing=".15em">KM A CASA</text>
+  <text id="dbearing" x="150" y="189" text-anchor="middle" font-size="11" fill="#5a6a40" font-family="-apple-system,system-ui,sans-serif">Marca tu casa</text>
+
+  <!-- Direction arrow (rotates to bearing) -->
+  <g id="darrow" transform="rotate(0,150,150)" opacity="0">
+    <polygon points="150,18 142,36 158,36" fill="#c8f135" filter="url(#glow)"/>
+  </g>
+</svg>
 </div>
 
-<div class="stats-grid">
-  <div class="stat">
-    <div class="stat-label">Recorrido</div>
-    <div class="stat-value" id="total-km">0.00 <span class="stat-unit">km</span></div>
-  </div>
-  <div class="stat">
-    <div class="stat-label">Tiempo</div>
-    <div class="stat-value" id="elapsed">00:00</div>
-  </div>
-  <div class="stat">
-    <div class="stat-label">Ritmo</div>
-    <div class="stat-value" id="pace">— <span class="stat-unit">'/km</span></div>
-  </div>
-  <div class="stat">
-    <div class="stat-label">Velocidad</div>
-    <div class="stat-value" id="speed">— <span class="stat-unit">km/h</span></div>
-  </div>
+<div class="stats">
+  <div class="stat"><div class="stat-label">Recorrido</div><div class="stat-value" id="s-km">0<span class="stat-unit">,00 km</span></div></div>
+  <div class="stat"><div class="stat-label">Tiempo</div><div class="stat-value" id="s-time">00<span class="stat-unit">:00</span></div></div>
+  <div class="stat"><div class="stat-label">Ritmo</div><div class="stat-value" id="s-pace">—<span class="stat-unit"> /km</span></div></div>
+  <div class="stat"><div class="stat-label">Velocidad</div><div class="stat-value" id="s-spd">—<span class="stat-unit"> km/h</span></div></div>
 </div>
 
+<button class="btn-main" id="btn-run" onclick="toggleRun()">
+  <svg width="14" height="16" viewBox="0 0 10 14" fill="currentColor"><polygon points="0,0 10,7 0,14"/></svg>
+  Iniciar carrera
+</button>
 <div class="btn-row">
-  <button class="btn btn-start" id="btn-run" onclick="toggleRun()">Iniciar</button>
-  <button class="btn" id="btn-home" onclick="setHome()">Marcar casa</button>
+  <button class="btn-sec" onclick="setHome()">Marcar casa</button>
+  <button class="btn-sec" onclick="resetSession()">Reiniciar sesión</button>
 </div>
-<button class="btn btn-reset" onclick="resetSession()">Reiniciar sesión</button>
-
-<footer>Distancia en línea recta · GPS del dispositivo</footer>
 
 <script>
-var watchId=null,isRunning=false,homePos=null,lastPos=null;
-var totalKm=0,startTs=null,timerTick=null;
+(function(){
+  // Draw ticks
+  var g=document.getElementById('ticks');
+  for(var i=0;i<72;i++){
+    var a=i*5,r=a*Math.PI/180;
+    var isN=a%90===0,isM=a%45===0;
+    var r1=140,r2=isN?124:isM?128:132;
+    var l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',150+r1*Math.sin(r)); l.setAttribute('y1',150-r1*Math.cos(r));
+    l.setAttribute('x2',150+r2*Math.sin(r)); l.setAttribute('y2',150-r2*Math.cos(r));
+    l.setAttribute('stroke',isN?'#c8f135':'#2a3a10');
+    l.setAttribute('stroke-width',isN?'2':isM?'1.5':'1');
+    g.appendChild(l);
+  }
+  // N arc
+  var ar=138,sa=-22*Math.PI/180,ea=22*Math.PI/180;
+  document.getElementById('n-arc').setAttribute('d','M '+(150+ar*Math.sin(sa))+' '+(150-ar*Math.cos(sa))+' A '+ar+' '+ar+' 0 0 1 '+(150+ar*Math.sin(ea))+' '+(150-ar*Math.cos(ea)));
+  // Sine wave
+  var d='M 10 150';
+  for(var x=12;x<=288;x+=3) d+=' L '+x+' '+(150+7*Math.sin((x-10)*Math.PI/65));
+  document.getElementById('wave').setAttribute('d',d);
+})();
 
-function hav(a,b,c,d){
-  var dA=(c-a)*Math.PI/180,dB=(d-b)*Math.PI/180;
-  var x=Math.sin(dA/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dB/2)**2;
-  return 6371*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
-}
+var watchId=null,running=false,homePos=null,lastPos=null,totalKm=0,startTs=null,tick=null;
+
+function hav(a,b,c,d){var da=(c-a)*Math.PI/180,db=(d-b)*Math.PI/180,x=Math.sin(da/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(db/2)**2;return 6371*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
+function bearing(a,b,c,d){var dl=(d-b)*Math.PI/180,y=Math.sin(dl)*Math.cos(c*Math.PI/180),x=Math.cos(a*Math.PI/180)*Math.sin(c*Math.PI/180)-Math.sin(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.cos(dl);return(Math.atan2(y,x)*180/Math.PI+360)%360;}
+function compass(b){return['N','NE','E','SE','S','SO','O','NO'][Math.round(b/45)%8];}
 function pad(n){return String(n).padStart(2,'0');}
-function fmt(ms){
-  var s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);
-  return h>0?h+':'+pad(m%60)+':'+pad(s%60):pad(m)+':'+pad(s%60);
-}
-function setAlert(msg,type){
-  var el=document.getElementById('alert-box');
-  el.innerHTML=msg?'<div class="alert alert-'+type+'">'+msg+'</div>':'';
-}
+function fmtTime(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);return h>0?h+':'+pad(m%60)+':'+pad(s%60):pad(m)+':'+pad(s%60);}
+function setAlert(msg,type){document.getElementById('alert-box').innerHTML=msg?'<div class="alert alert-'+type+'">'+msg+'</div>':'';}
 
 function onPos(pos){
   var lat=pos.coords.latitude,lon=pos.coords.longitude,spd=pos.coords.speed,acc=pos.coords.accuracy;
   document.getElementById('gps-dot').classList.add('on');
-  document.getElementById('gps-label').textContent='GPS ±'+Math.round(acc||0)+'m';
+  document.getElementById('gps-label').textContent='GPS · '+Math.round(acc||0)+' m';
 
   if(spd!=null){
     var kmh=spd*3.6;
-    document.getElementById('speed').innerHTML=kmh.toFixed(1)+' <span class="stat-unit">km/h</span>';
-    if(kmh>0.8){
-      var pm=60/kmh,m=Math.floor(pm),s=Math.round((pm-m)*60);
-      document.getElementById('pace').innerHTML=m+':'+pad(s)+' <span class="stat-unit">\'/km</span>';
-    } else {
-      document.getElementById('pace').innerHTML='— <span class="stat-unit">\'/km</span>';
-    }
+    document.getElementById('s-spd').innerHTML=kmh.toFixed(1)+'<span class="stat-unit"> km/h</span>';
+    if(kmh>0.8){var pm=60/kmh,pm_m=Math.floor(pm),pm_s=Math.round((pm-pm_m)*60);document.getElementById('s-pace').innerHTML=pm_m+':'+pad(pm_s)+'<span class="stat-unit"> /km</span>';}
+    else document.getElementById('s-pace').innerHTML='—<span class="stat-unit"> /km</span>';
   }
 
-  if(isRunning&&lastPos){
-    var d=hav(lastPos.lat,lastPos.lon,lat,lon);
-    if(d>0.003) totalKm+=d;
-  }
-  if(isRunning) lastPos={lat:lat,lon:lon};
-  document.getElementById('total-km').innerHTML=totalKm.toFixed(2)+' <span class="stat-unit">km</span>';
+  if(running&&lastPos){var d=hav(lastPos.lat,lastPos.lon,lat,lon);if(d>0.003)totalKm+=d;}
+  if(running)lastPos={lat:lat,lon:lon};
+  var km=totalKm.toFixed(2).split('.');
+  document.getElementById('s-km').innerHTML=km[0]+'<span class="stat-unit">,'+km[1]+' km</span>';
 
   if(homePos){
     var dh=hav(homePos.lat,homePos.lon,lat,lon);
-    var valEl=document.getElementById('home-dist');
-    if(dh<0.05){
-      valEl.innerHTML='<span style="color:var(--green)">¡En casa!</span>';
-    } else if(dh<1){
-      valEl.innerHTML=(dh*1000).toFixed(0)+'<span class="home-card-unit"> m</span>';
-    } else {
-      valEl.className='home-card-value'+(dh>3?' far':'');
-      valEl.innerHTML=dh.toFixed(2)+'<span class="home-card-unit"> km</span>';
-    }
+    var br=bearing(lat,lon,homePos.lat,homePos.lon);
+    document.getElementById('darrow').setAttribute('transform','rotate('+br+',150,150)');
+    document.getElementById('darrow').setAttribute('opacity','1');
+    document.getElementById('dbearing').textContent=Math.round(br)+'° · '+compass(br);
+    if(dh<0.05){document.getElementById('dval').textContent='¡Casa!';document.getElementById('dval').setAttribute('font-size','36');document.getElementById('dunit').textContent='HAS LLEGADO';}
+    else if(dh<1){document.getElementById('dval').textContent=(dh*1000).toFixed(0);document.getElementById('dval').setAttribute('font-size','56');document.getElementById('dunit').textContent='M A CASA';}
+    else{var v=dh.toFixed(2).replace('.',',');document.getElementById('dval').textContent=v;document.getElementById('dval').setAttribute('font-size',dh>=10?'44':'56');document.getElementById('dunit').textContent='KM A CASA';}
   }
 }
 
 function onErr(e){
   document.getElementById('gps-dot').classList.remove('on');
   var m='Error GPS.';
-  if(e.code===1) m='Permiso GPS denegado. Ve a Ajustes → Safari → Ubicación.';
-  else if(e.code===2) m='GPS no disponible. Sal al exterior.';
-  else if(e.code===3) m='Timeout GPS. ¿Tienes señal?';
+  if(e.code===1)m='Permiso denegado. Ajustes → Safari → Ubicación.';
+  else if(e.code===2)m='GPS no disponible. Sal al exterior.';
+  else if(e.code===3)m='Timeout GPS. ¿Tienes señal?';
   setAlert(m,'warn');
 }
 
-function toggleRun(){
-  isRunning?stopRun():startRun();
-}
+function toggleRun(){running?stopRun():startRun();}
+
 function startRun(){
   if(!navigator.geolocation){setAlert('GPS no soportado.','warn');return;}
-  isRunning=true;startTs=Date.now();lastPos=null;totalKm=0;
+  running=true;startTs=Date.now();lastPos=null;totalKm=0;
   var b=document.getElementById('btn-run');
-  b.textContent='Parar';b.className='btn btn-stop';
+  b.innerHTML='<svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><rect width="4" height="14"/><rect x="8" width="4" height="14"/></svg> Parar';
+  b.className='btn-main stop';
   setAlert(null);
-  timerTick=setInterval(function(){
-    document.getElementById('elapsed').textContent=fmt(Date.now()-startTs);
+  tick=setInterval(function(){
+    var t=fmtTime(Date.now()-startTs),p=t.lastIndexOf(':');
+    document.getElementById('s-time').innerHTML=t.slice(0,p)+'<span class="stat-unit">'+t.slice(p)+'</span>';
   },1000);
   watchId=navigator.geolocation.watchPosition(onPos,onErr,{enableHighAccuracy:true,maximumAge:2000,timeout:20000});
 }
+
 function stopRun(){
-  isRunning=false;
+  running=false;
   if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null;}
-  clearInterval(timerTick);timerTick=null;
+  clearInterval(tick);tick=null;
   var b=document.getElementById('btn-run');
-  b.textContent='Iniciar';b.className='btn btn-start';
+  b.innerHTML='<svg width="14" height="16" viewBox="0 0 10 14" fill="currentColor"><polygon points="0,0 10,7 0,14"/></svg> Iniciar carrera';
+  b.className='btn-main';
   document.getElementById('gps-dot').classList.remove('on');
   document.getElementById('gps-label').textContent='GPS';
 }
+
 function setHome(){
   if(!navigator.geolocation){setAlert('GPS no soportado.','warn');return;}
   setAlert('Obteniendo posición GPS...','info');
   navigator.geolocation.getCurrentPosition(function(pos){
     homePos={lat:pos.coords.latitude,lon:pos.coords.longitude};
-    document.getElementById('home-sub').textContent='Casa marcada ✓';
-    document.getElementById('home-sub').className='home-card-sub set';
-    document.getElementById('btn-home').className='btn btn-home-set';
-    document.getElementById('btn-home').textContent='Casa ✓';
-    setAlert(null);
+    setAlert('Casa marcada ✓','ok');
+    setTimeout(function(){setAlert(null);},2500);
   },onErr,{enableHighAccuracy:true,timeout:15000});
 }
+
 function resetSession(){
-  stopRun();
-  totalKm=0;startTs=null;lastPos=null;
-  document.getElementById('home-dist').innerHTML='—<span class="home-card-unit"></span>';
-  document.getElementById('total-km').innerHTML='0.00 <span class="stat-unit">km</span>';
-  document.getElementById('elapsed').textContent='00:00';
-  document.getElementById('pace').innerHTML='— <span class="stat-unit">\'/km</span>';
-  document.getElementById('speed').innerHTML='— <span class="stat-unit">km/h</span>';
+  stopRun();totalKm=0;startTs=null;lastPos=null;
+  document.getElementById('dval').textContent='—';document.getElementById('dval').setAttribute('font-size','56');
+  document.getElementById('dunit').textContent='KM A CASA';
+  document.getElementById('dbearing').textContent='Marca tu casa';
+  document.getElementById('darrow').setAttribute('opacity','0');
+  document.getElementById('s-km').innerHTML='0<span class="stat-unit">,00 km</span>';
+  document.getElementById('s-time').innerHTML='00<span class="stat-unit">:00</span>';
+  document.getElementById('s-pace').innerHTML='—<span class="stat-unit"> /km</span>';
+  document.getElementById('s-spd').innerHTML='—<span class="stat-unit"> km/h</span>';
   setAlert(null);
 }
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js').catch(function(){});
-}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(function(){});
 </script>
 </body>
 </html>
